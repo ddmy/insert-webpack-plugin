@@ -1,0 +1,17 @@
+{
+  "name": "insert-plugin-webpack",
+  "version": "4.0.0",
+  "description": "webpack打包文件插入内容",
+  "main": "./src/index.js",
+  "private": false,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "webpack",
+    "insert",
+    "插入"
+  ],
+  "author": "Yijio",
+  "license": "ISC"
+}
