@@ -1,6 +1,6 @@
 {
   "name": "insert-webpack-plugin",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "webpack打包文件插入内容",
   "main": "./src/index.js",
   "private": false,
