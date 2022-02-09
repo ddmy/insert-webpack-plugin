@@ -14,6 +14,22 @@
 npm i insert-webpack-plugin
 ```
 
+<h2 align="center">Usage</h2>
+
+**webpack.config.js**
+```js
+const InsertPlugin = require('insert-webpack-plugin')
+
+module.exports = {
+  plugins: [
+    new InsertPlugin({
+      type: /.*\.js/,
+      inner: ['/* Author xxx */\n', '/* time: 2022/2/9 */\n']
+    })
+  ]
+}
+```
+
 <h2 align="center">选项</h2>
 
 |参数名|类型|默认值|描述|
