@@ -11,7 +11,7 @@
 <h3>Webpack 4</h3>
 
 ```bash
-npm i insert-plugin-webpack
+npm i insert-webpack-plugin
 ```
 
 <h2 align="center">选项</h2>
