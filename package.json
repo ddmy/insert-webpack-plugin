@@ -7,11 +7,19 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ddmy/insert-webpack-plugin.git"
+  },
   "keywords": [
     "webpack",
     "insert",
     "插入"
   ],
   "author": "Yijio",
-  "license": "ISC"
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ddmy/insert-webpack-plugin/issues"
+  },
+  "homepage": "https://github.com/ddmy/insert-webpack-plugin#readme"
 }
