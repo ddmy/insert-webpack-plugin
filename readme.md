@@ -15,7 +15,7 @@
 npm i insert-webpack-plugin -D
 ```
 
-<h2 align="center">Usage</h2>
+<h2 align="center">使用</h2>
 
 **webpack.config.js**
 ```js
