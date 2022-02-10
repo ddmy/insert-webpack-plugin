@@ -40,8 +40,7 @@ module.exports = {
       type: /.*\.js/,
       insertPosition: source => {
         return source.slice(0, 50) + '\n /* Hello World */ \n' + source.slice(51)
-      },
-      inner: ['/* Author xxx */\n', '/* time: 2022/2/9 */\n']
+      }
     })
   ]
 }
