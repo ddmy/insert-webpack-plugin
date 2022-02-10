@@ -57,6 +57,5 @@ module.exports = {
 
 <h2 align="center">待实现</h2>
 
-- 文件不同位置插入
 - 不同文件插入不同内容
 - webpack5支持
