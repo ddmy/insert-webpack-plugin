@@ -9,7 +9,7 @@
 
 <h2 align="center">安装</h2>
 
-<h3>Webpack 4</h3>
+>  支持webpack4.x webpack5.x
 
 ```bash
 npm i insert-webpack-plugin -D

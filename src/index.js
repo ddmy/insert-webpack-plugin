@@ -1,8 +1,16 @@
+const { version } = require('webpack')
+const fs = require('fs')
+const Compilation = require('webpack/lib/Compilation.js')
+const path = require('path')
+
+const currrentVersion = Number(version.split('.')[0])
 function InsertPlugin(options) {
   this.pushArr = options.inner || []
   this.type = options.type || /.*/
   // before after function (source) {}
   this.insertPosition = options.insertPosition || 'before'
+  this.sourceList = {}
+  this.output = ''
 }
 
 InsertPlugin.prototype.computedSource = function (assets, filename) {
@@ -21,6 +29,9 @@ InsertPlugin.prototype.computedSource = function (assets, filename) {
     }
     assets[filename].source = () => source
     assets[filename].size = () => size
+    this.sourceList[filename] = {
+      source, size
+    }
   } else if (assets[filename]._source && assets[filename]._source.children) {
     if (this.insertPosition === 'before') {
       assets[filename]._source.children = this.pushArr.concat(assets[filename]._source.children)
@@ -29,10 +40,22 @@ InsertPlugin.prototype.computedSource = function (assets, filename) {
     } else if (typeof this.insertPosition === 'function') {
       assets[filename]._source.children = this.insertPosition(assets[filename]._source.children)
     }
+    this.sourceList[filename] = {
+      source: assets[filename]._source.children
+    }
   }
 }
 
 InsertPlugin.prototype.apply = function(compiler) {
+  this.output = compiler.options.output.path
+  if (currrentVersion === 4) {
+    this.compiler4(compiler)
+  } else if (currrentVersion >= 5) {
+    this.compiler5(compiler)
+  }
+}
+
+InsertPlugin.prototype.compiler4 = function (compiler) {
   compiler.plugin('emit', (compilation, callback) => {
     // 在生成文件中，创建一个头部字符串
     // 遍历所有编译过的资源文件，
@@ -46,6 +69,35 @@ InsertPlugin.prototype.apply = function(compiler) {
     }
     callback()
   })
+}
+
+InsertPlugin.prototype.compiler5 = function (compiler) {
+  compiler.hooks.compilation.tap('insert-webpack-plugin', compilation => {
+    compilation.hooks.processAssets.tap(
+      {
+        name: 'insert-webpack-plugin',
+        stage: Compilation.PROCESS_ASSETS_STAGE_ANALYSE
+      },
+      () => {
+        const type = typeof this.type
+        for (var filename in compilation.assets) {
+          if ((type === 'object' && this.type.test(filename)) || (type === 'string' && filename === type)) {
+            this.computedSource(compilation.assets, filename)
+          }
+        }
+      }
+    )
+  })
+  compiler.hooks.assetEmitted.tap(
+    'insert-webpack-plugin',
+    (file, info) => {
+      const type = typeof this.type
+      if ((type === 'object' && this.type.test(file)) || (type === 'string' && file === type)) {
+        info.content = Buffer.from(this.sourceList[file].source)
+        fs.writeFileSync(path.resolve(this.output, file), info.content)
+      }
+    }
+  )
 }
 
 module.exports = InsertPlugin;
