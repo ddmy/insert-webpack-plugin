@@ -54,7 +54,6 @@ module.exports = {
 `insertPosition`|{String\|Function}|'before'|要插入的位置 </br> String: 'before'\|'after'</br>Function 接收文件source参数，值为文件内容String,使用此方式,方法必须返回处理后的String,使用Function将会忽略`inner`
 `inner`|Array|[]|要插入文件头部的内容(目前仅支持在头部插入)
 
-<h2 align="center">待实现</h2>
+<h2 align="center">协助</h2>
 
-- 不同文件插入不同内容
-- webpack5支持
+- 如果您在使用中遇到了任何问题，欢迎提issues
